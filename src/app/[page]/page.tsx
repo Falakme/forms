@@ -36,7 +36,7 @@ export default async function Page({ params }: PageProps) {
       notFound();
     }
   } catch (error) {
-    // If fetch fails, assume form doesn't exist
+    console.log(error);
     notFound();
   }
 
