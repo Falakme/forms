@@ -11,9 +11,19 @@ export async function generateMetadata({
 }: PageProps): Promise<Metadata> {
   const { page } = await params;
 
-  // Simple fallback title without fetching
   return {
     title: `Form ${page}`,
+    description: `Complete form ${page}.`,
+    openGraph: {
+      title: `Form ${page}`,
+      description: `Complete form ${page}.`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title: `Form ${page}`,
+      description: `Complete form ${page}.`,
+    },
   };
 }
 
