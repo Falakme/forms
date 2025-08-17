@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,7 +12,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#000000",
+};
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://forms.falak.me"),
   title: {
     default: "Forms by Falak",
     template: "%s | Forms by Falak",
@@ -62,13 +71,6 @@ export const metadata: Metadata = {
     description: "Interactive forms and surveys.",
     images: ["/og-image.png"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
-  themeColor: "#000000",
   manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
