@@ -23,29 +23,47 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  // Check if form exists
-  try {
-    const response = await fetch(`https://tally.so/r/${page}`, {
-      method: "HEAD", // Only get headers, not body
-      headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; Bot/1.0)",
-      },
-    });
-
-    if (response.status === 404) {
-      notFound();
-    }
-  } catch (error) {
-    console.log(error);
-    notFound();
-  }
-
   return (
     <>
       <Script
         src="https://tally.so/widgets/embed.js"
         strategy="afterInteractive"
       />
+      <Script id="title-logger" strategy="afterInteractive">
+        {`
+          console.log('Initial page title:', document.title);
+          
+          // Listen for Tally form loaded event
+          window.addEventListener('message', function(event) {
+            if (event.origin === 'https://tally.so') {
+              try {
+                const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+                console.log('Message from Tally:', data);
+                
+                if (data.event === 'Tally.FormLoaded' && data.payload && data.payload.formId) {
+                  console.log('Form loaded, fetching title for:', data.payload.formId);
+                  
+                  // Fetch title from our API
+                  fetch('/api/form-title?formId=' + data.payload.formId)
+                    .then(response => response.json())
+                    .then(result => {
+                      console.log('Got title from API:', result.title);
+                      if (result.title) {
+                        document.title = result.title;
+                        console.log('Updated page title to:', document.title);
+                      }
+                    })
+                    .catch(error => {
+                      console.log('Failed to fetch title from API:', error);
+                    });
+                }
+              } catch (e) {
+                console.log('Error parsing Tally message:', e);
+              }
+            }
+          });
+        `}
+      </Script>
       <div style={{ margin: 0, height: "100vh", overflow: "hidden" }}>
         <iframe
           data-tally-src={`https://tally.so/r/${page}`}
@@ -65,5 +83,4 @@ export default async function Page({ params }: PageProps) {
     </>
   );
 }
-
 export const dynamic = "force-static";
