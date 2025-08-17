@@ -14,7 +14,7 @@ export default function NotFound() {
       }}
     >
       <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-        Form doesn't exist
+        Form doesn&apos;t exist
       </h1>
       <Link
         href="/"
