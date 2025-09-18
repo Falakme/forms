@@ -60,7 +60,7 @@ function SuccessContent() {
             className="text-sm leading-relaxed"
             style={{ color: "#DFDFDE", opacity: 0.7 }}
           >
-            Thank you for your response. We've received your submission
+            Thank you for your response. We&apos;ve received your submission
             successfully.
           </p>
         </div>
