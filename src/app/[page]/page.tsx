@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Script from "next/script";
 import { Metadata } from "next";
+import Footer from "../components/Footer";
 
 interface PageProps {
   params: Promise<{ page: string }>;
@@ -90,6 +91,7 @@ export default async function Page({ params }: PageProps) {
           }}
         ></iframe>
       </div>
+      <Footer />
     </>
   );
 }
